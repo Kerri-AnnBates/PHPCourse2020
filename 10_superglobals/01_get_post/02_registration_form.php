@@ -1,6 +1,11 @@
 <?php
 
 define("REQUIRED_ERROR", "This field is required");
+$username = "";
+$email = "";
+$password = "";
+$password_confirm = "";
+$cv_url = "";
 
 if($_SERVER["REQUEST_METHOD"] === "POST") {
     // echo "<pre>";
@@ -13,16 +18,20 @@ if($_SERVER["REQUEST_METHOD"] === "POST") {
     $password_confirm = post_data("password_confirm");
     $cv_url = post_data("cv_url");
 
-    echo "<pre>";
-    var_dump($username, $email, $password, $password_confirm, $cv_url);
-    echo "</pre>";
+    // echo "<pre>";
+    // var_dump($username, $email, $password, $password_confirm, $cv_url);
+    // echo "</pre>";
     
     if(!$username) {
         $errors["username"] = REQUIRED_ERROR;
+    } else if(strlen($username) < 6 || strlen($username > 16)) {
+        $errors["username"] = "Username must be either less than 6 digits or greater than 16 characters.";
     }
 
     if(!$email) {
         $errors["email"] = REQUIRED_ERROR;
+    }  else if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors["email"] = "This field must be a valid email address.";
     }
 
     if(!$password) {
@@ -33,11 +42,17 @@ if($_SERVER["REQUEST_METHOD"] === "POST") {
         $errors["password_confirm"] = REQUIRED_ERROR;
     }
 
-    if(!$cv_url) {
-        $errors["cv_url"] = REQUIRED_ERROR;
+    if($password && $password_confirm && strcmp($password, $password_confirm) !== 0) {
+        $errors["password_confirm"] = "This field must match the password field.";
     }
 
+    if($cv_url && !filter_var($cv_url, FILTER_VALIDATE_URL)) {
+        $errors["cv_url"] = "Please provide a valid link";
+    }
 
+    if(empty($errors)) {
+        echo "Everything is good!<br>";
+    }
 }
 
 function post_data($field) {
@@ -69,7 +84,7 @@ function post_data($field) {
             <div class="form-group">
                 <label>Username</label>
                 <input class="form-control <?php echo isset($errors["username"]) ? "is-invalid" : ""; ?>"
-                       name="username">
+                       name="username" value="<?php echo $username; ?>">
                 <small class="form-text text-muted">Min: 6 and max 16 characters</small>
                 <div class="invalid-feedback"><?php echo $errors["username"] ?? "" ; ?></div>
             </div>
@@ -77,7 +92,7 @@ function post_data($field) {
         <div class="col">
             <div class="form-group">
                 <label>Email</label>
-                <input type="email" class="form-control <?php echo isset($errors["email"]) ? "is-invalid" : ""; ?>" name="email">
+                <input type="email" class="form-control <?php echo isset($errors["email"]) ? "is-invalid" : ""; ?>" name="email" value="<?php echo $email; ?>">
                 <div class="invalid-feedback"><?php echo $errors["email"] ?? "" ; ?></div>
             </div>
         </div>
@@ -86,7 +101,7 @@ function post_data($field) {
         <div class="col">
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" class="form-control <?php echo isset($errors["password"]) ? "is-invalid" : ""; ?>" name="password">
+                <input type="password" class="form-control <?php echo isset($errors["password"]) ? "is-invalid" : ""; ?>" name="password" value="<?php echo $password; ?>">
                 <div class="invalid-feedback"><?php echo $errors["password"] ?? "" ; ?></div>
             </div>
         </div>
@@ -95,7 +110,7 @@ function post_data($field) {
                 <label>Repeat Password</label>
                 <input type="password"
                        class="form-control <?php echo isset($errors["password_confirm"]) ? "is-invalid" : ""; ?>"
-                       name="password_confirm">
+                       name="password_confirm" value="<?php echo $password_confirm; ?>">
                        <div class="invalid-feedback"><?php echo $errors["password_confirm"] ?? "" ; ?></div>
             </div>
         </div>
@@ -104,8 +119,8 @@ function post_data($field) {
         <div class="form-group">
             <label>Your CV link</label>
             <input type="text" class="form-control <?php echo isset($errors["cv_url"]) ? "is-invalid" : ""; ?>"
-                   name="cv_url" placeholder="https://www.example.com/my-cv"/>
-                   <div class="invalid-feedback"><?php echo $errors["username"] ?? "" ; ?></div>
+                   name="cv_url" placeholder="https://www.example.com/my-cv" value="<?php echo $cv_url; ?>" />
+                   <div class="invalid-feedback"><?php echo $errors["cv_url"] ?? "" ; ?></div>
         </div>
     </div>
 
