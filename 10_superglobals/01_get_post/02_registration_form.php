@@ -1,6 +1,31 @@
 <?php
 
 
+if($_SERVER["REQUEST_METHOD"] === "POST") {
+    // echo "<pre>";
+    // var_dump($_POST);
+    // echo "</pre>";
+
+    $username = post_data("username");
+    $email = post_data("email");
+    $password = post_data("password");
+    $password_confirm = post_data("password_confirm");
+    $cv_url = post_data("cv_url");
+
+    echo "<pre>";
+    var_dump($username, $email, $password, $password_confirm, $cv_url);
+    echo "</pre>";
+    
+}
+
+function post_data($field) {
+    if(!isset($_POST[$field])) {
+        return "";
+    }
+
+    return htmlspecialchars(stripslashes($_POST[$field])); // returns string version of html elements.
+}
+
 ?>
 <!doctype html>
 <html lang="en">
