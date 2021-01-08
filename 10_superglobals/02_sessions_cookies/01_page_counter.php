@@ -1,5 +1,14 @@
 <?php
 
+    session_start();
+    echo session_id() . "<br>";
+    
+    if(isset($_SESSION["counter"])) {
+        $_SESSION["counter"]++;
+    } else {
+        $_SESSION["counter"] = 1;
+    }
+    
 ?>
 
 <!doctype html>
@@ -12,5 +21,6 @@
     <title>Document</title>
 </head>
 <body>
+    <h1>You have visited the site <?php echo $_SESSION["counter"]; ?>  times</h1>
 </body>
 </html>
