@@ -32,9 +32,13 @@
             <div style="margin-bottom: 20px;">
             <input type="checkbox" <?php echo $todo["completed"] ? "checked" : ""; ?> name="" id="">
                 <?php echo $todo_name; ?>
-                <button>Delete</button>
+                <form action="delete.php" method="post">
+                    <input type="hidden" name="todo_name" value="<?php echo $todo_name; ?>">
+                    <button>Delete</button>
+                </form>
             </div>
 
     <?php } ?>
+
 </body>
 </html>
