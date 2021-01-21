@@ -1,0 +1,8 @@
+{
+    "TODO Item 1": {
+        "completed": true
+    },
+    "TODO Item 2": {
+        "completed": false
+    }
+}
