@@ -28,17 +28,39 @@
     </form>
 
     <?php foreach ($todos as $todo_name => $todo) { ?>
-            
+
             <div style="margin-bottom: 20px;">
-            <input type="checkbox" <?php echo $todo["completed"] ? "checked" : ""; ?> name="" id="">
+
+                <form style="display:inline-block;" action="change_status.php" method="post">
+                    <input type="hidden" name="todo_name" value="<?php echo $todo_name; ?>">
+                    <input type="checkbox" <?php echo $todo["completed"] ? "checked" : ""; ?> class="checkbox">
+                </form>
+                
                 <?php echo $todo_name; ?>
-                <form action="delete.php" method="post">
+
+                <form style="display:inline-block;" action="delete.php" method="post">
                     <input type="hidden" name="todo_name" value="<?php echo $todo_name; ?>">
                     <button>Delete</button>
                 </form>
             </div>
 
     <?php } ?>
+
+    <script>
+        window.onload = (event) => {
+            const checkboxes = document.querySelectorAll("input[type=checkbox]");
+
+            checkboxes.forEach(checkbox => {
+                
+                checkbox.addEventListener("click", (e) => {
+                    console.log(this.parentNode);
+                });
+
+            });
+        }
+        
+
+    </script>
 
 </body>
 </html>
