@@ -1,4 +1,14 @@
 <?php
+
+    require_once "./Connection.php";
+    $connection = new Connection();
+
+    $notes = $connection->getNotes();
+
+    echo "<pre>";
+    echo var_dump($notes);
+    echo "<prev>";
+
 ?>
 
 <!DOCTYPE html>
@@ -14,12 +24,11 @@
 <div>
     <form class="new-note" action="create.php" method="post">
         <input type="text" name="title" placeholder="Note title" autocomplete="off">
-        <textarea name="description" cols="30" rows="4"
-                  placeholder="Note Description"></textarea>
+        <textarea name="description" cols="30" rows="4" placeholder="Note Description"></textarea>
         <button>New note</button>
     </form>
     <div class="notes">
-        <div class="note">
+        <!-- <div class="note">
             <div class="title">
                 <a href="">Sample note</a>
             </div>
@@ -28,7 +37,7 @@
             </div>
             <small>15/02/20 19:00:00</small>
             <button class="close">X</button>
-        </div>
+        </div> -->
     </div>
 </div>
 </body>
