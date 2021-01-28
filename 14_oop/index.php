@@ -1,27 +1,9 @@
 <?php
 
-// What is class and instance
-class Person {
-    public string $name;
-    public int $age;
-    private float $salary;
+require_once "./Person.php";
+require_once "./Student.php";
 
-    public function __construct($n, $a, $s) {
-        $this->name = $n;
-        $this->age = $a;
-        $this->salary = $s;
-    }
-
-    public function getSalary() {
-        return $this->salary;
-    }
-
-    public function setSalary($salary) {
-        $this->salary = $salary;
-    }
-}
-
-$p = new Person("Yoshi", 6, 10.00);
+$p = new Person("Yoshi", 6, null);
 // $p->name = "Yoshi";
 // $p->$age = 6;
 // $p->$salary = null;
@@ -35,8 +17,8 @@ echo "<pre><br>";
 echo var_dump($p);
 echo "<pre><br>";
 
-// Create Person class in Person.php
+$s = new Student("Pepper", 6, 1000);
 
-// Create instance of Person
-
-// Using setter and getter
+echo "<pre><br>";
+echo var_dump($s);
+echo "<pre><br>";
