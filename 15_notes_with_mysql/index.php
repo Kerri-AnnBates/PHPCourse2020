@@ -5,10 +5,9 @@
 
     $notes = $connection->getNotes();
 
-    echo "<pre>";
-    echo var_dump($notes);
-    echo "<prev>";
-
+    // echo "<pre>";
+    // echo var_dump($notes);
+    // echo "<prev";
 ?>
 
 <!DOCTYPE html>
@@ -28,16 +27,18 @@
         <button>New note</button>
     </form>
     <div class="notes">
-        <!-- <div class="note">
+        <?php foreach($notes as $note): ?>
+        <div class="note">
             <div class="title">
-                <a href="">Sample note</a>
+                <a href=""><?php echo $note["title"]; ?></a>
             </div>
             <div class="description">
-                Sample note description
+                <?php echo $note["description"]; ?>
             </div>
-            <small>15/02/20 19:00:00</small>
+            <small><?php echo $note["create_date"]; ?></small>
             <button class="close">X</button>
-        </div> -->
+        </div>
+        <?php endforeach; ?>
     </div>
 </div>
 </body>
