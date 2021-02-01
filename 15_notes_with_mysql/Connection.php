@@ -15,4 +15,20 @@ class Connection {
 
         return $statement->fetchAll(PDO::FETCH_ASSOC); // return notes as associative array format.
     }
+
+    public function addNote($note) {
+
+        $statement = $this->pdo->prepare("
+            INSERT INTO notes (title, description, create_date)
+            VALUES(:title, :description, :date)
+        ");
+
+        $statement->bindValue("title", $note["title"]);
+        $statement->bindValue("description", $note["description"]);
+        $statement->bindValue("date", date("Y-m-d H:i:s"));
+
+        return $statement->execute();
+    }
 }
+
+return new Connection();

@@ -1,8 +1,7 @@
 <?php
 
-    require_once "./Connection.php";
-    $connection = new Connection();
-
+    $connection = require_once "./Connection.php";
+    
     $notes = $connection->getNotes();
 
     // echo "<pre>";
