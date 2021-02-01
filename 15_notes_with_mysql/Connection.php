@@ -38,6 +38,18 @@ class Connection {
 
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function updateNote($note) {
+        $statement = $this->pdo->prepare("
+            UPDATE notes SET title = :title, description = :description WHERE id = :id
+        ");
+
+        $statement->bindValue("title", $note["title"]);
+        $statement->bindValue("description", $note["description"]);
+        $statement->bindValue("id", $note["id"]);
+        
+        return $statement->execute();
+    }
 }
 
 return new Connection();

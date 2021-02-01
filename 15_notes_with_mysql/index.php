@@ -11,9 +11,7 @@
     ];
 
     if (isset($_GET["id"])) {
-
-        $id = $_GET["id"];
-        $current_note = $connection->getNote($id);
+        $current_note = $connection->getNote($_GET["id"]);
     }
 ?>
 
@@ -31,11 +29,10 @@
     <form class="new-note" action="save.php" method="post">
         <input type="hidden" name="id" value="<?php echo $current_note["id"]; ?>">
         <input type="text" name="title" placeholder="Note title" autocomplete="off" value="<?php echo $current_note["title"]; ?>">
-        <textarea name="description" cols="30" rows="4" placeholder="Note Description">
-            <?php echo $current_note["description"]; ?>
-        </textarea>
-        <button><?php echo isset($current_note["id"]) ? "Update note" : "New Note"; ?></button>
+        <textarea name="description" cols="30" rows="4" placeholder="Note Description"><?php echo $current_note["description"]; ?></textarea>
+        <button><?php echo ($current_note["id"]) ? "Update Note" : "New Note"; ?></button>
     </form>
+
     <div class="notes">
         <?php foreach($notes as $note): ?>
         <div class="note">

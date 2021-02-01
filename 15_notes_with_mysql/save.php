@@ -6,6 +6,12 @@
     // echo "<prev";
 
     $new_note = $_POST;
-    $connection->addNote($new_note);
+    $id = isset($_POST["id"]) ? $_POST["id"] : "";
+
+    if ($id) {
+        $connection->updateNote($_POST); // Update
+    } else {
+        $connection->addNote($new_note); // Add Note
+    }
 
     header("Location:  index.php");
