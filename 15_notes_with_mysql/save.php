@@ -1,10 +1,6 @@
 <?php
     $connection = require_once "./Connection.php";
 
-    // echo "<pre>";
-    // echo var_dump($_POST);
-    // echo "<prev";
-
     $new_note = $_POST;
     $id = isset($_POST["id"]) ? $_POST["id"] : "";
 
