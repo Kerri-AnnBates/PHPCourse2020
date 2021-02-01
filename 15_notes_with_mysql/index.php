@@ -1,12 +1,20 @@
 <?php
 
     $connection = require_once "./Connection.php";
-    
+
     $notes = $connection->getNotes();
 
-    // echo "<pre>";
-    // echo var_dump($notes);
-    // echo "<prev";
+    $current_note = [
+        "id" => "",
+        "title" => "",
+        "description" => ""
+    ];
+
+    if (isset($_GET["id"])) {
+
+        $id = $_GET["id"];
+        $current_note = $connection->getNote($id);
+    }
 ?>
 
 <!DOCTYPE html>
@@ -20,16 +28,19 @@
 </head>
 <body>
 <div>
-    <form class="new-note" action="create.php" method="post">
-        <input type="text" name="title" placeholder="Note title" autocomplete="off">
-        <textarea name="description" cols="30" rows="4" placeholder="Note Description"></textarea>
-        <button>New note</button>
+    <form class="new-note" action="save.php" method="post">
+        <input type="hidden" name="id" value="<?php echo $current_note["id"]; ?>">
+        <input type="text" name="title" placeholder="Note title" autocomplete="off" value="<?php echo $current_note["title"]; ?>">
+        <textarea name="description" cols="30" rows="4" placeholder="Note Description">
+            <?php echo $current_note["description"]; ?>
+        </textarea>
+        <button><?php echo isset($current_note["id"]) ? "Update note" : "New Note"; ?></button>
     </form>
     <div class="notes">
         <?php foreach($notes as $note): ?>
         <div class="note">
             <div class="title">
-                <a href=""><?php echo $note["title"]; ?></a>
+                <a href="?id=<?php echo $note["id"]; ?>"><?php echo $note["title"]; ?></a>
             </div>
             <div class="description">
                 <?php echo $note["description"]; ?>
